@@ -111,6 +111,7 @@ contract CuriousCardsV3 is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
 
     event QuestionAsked(address indexed _from, uint indexed _toprofileid, uint _id, string _questiontext);
     event QuestionReplied(uint indexed _fromprofileid, address indexed _to, uint _id, string _replytext);
+    event ProfileUpdated(uint indexed _profileid, bool _isactive, uint _askfee);
 
     mapping(uint => address) public asker;
     uint redeemDuration;
@@ -210,6 +211,7 @@ contract CuriousCardsV3 is Initializable, ERC721Upgradeable, ERC721EnumerableUpg
         require(msg.sender == ProfileNFT.ownerOf(profileId),"Must own the profile NFT.");
         isActive[profileId] = _isActive;
         askFee[profileId] = _askFee;
+        emit ProfileUpdated(profileId, _isActive, _askFee);
     }
     
     function getHandle(uint profileId) external view returns (string memory) {
